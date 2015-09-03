@@ -167,17 +167,17 @@ public:
 
     m_width(640),
     m_height(480),
-    m_tagSize(0.166),
-    m_fx(600),
-    m_fy(600),
-    m_px(m_width/2),
+    m_tagSize(0.0205),
+    m_fx(5.6678092156496814e+02x),		// camera focal length see http://ksimek.github.io/2013/08/13/intrinsic/
+    m_fy(5.6678092156496814e+02),
+    m_px(m_width/2),	// camera principal point
     m_py(m_height/2),
 
     m_exposure(-1),
     m_gain(-1),
     m_brightness(-1),
 
-    m_deviceId(0)
+    m_deviceId(1)
   {}
 
   // changing the tag family
