@@ -1,4 +1,4 @@
-/**
+	/**
  * @file april_tags.cpp
  * @brief Example application for April tags library
  * @author: Michael Kaess
@@ -168,8 +168,8 @@ public:
     m_width(640),
     m_height(480),
     m_tagSize(0.0205),
-    m_fx(5.6678092156496814e+02),		// camera focal length see http://ksimek.github.io/2013/08/13/intrinsic/
-    m_fy(5.6678092156496814e+02),
+    m_fx(3.6104924005028636e+02),		// camera focal length see http://ksimek.github.io/2013/08/13/intrinsic/
+    m_fy(3.6104924005028636e+02),
     m_px(m_width/2),	// camera principal point
     m_py(m_height/2),
 
@@ -295,48 +295,48 @@ public:
 
   void setupVideo() {
 
-#ifdef EXPOSURE_CONTROL
+//#ifdef EXPOSURE_CONTROL
     // manually setting camera exposure settings; OpenCV/v4l1 doesn't
     // support exposure control; so here we manually use v4l2 before
     // opening the device via OpenCV; confirmed to work with Logitech
     // C270; try exposure=20, gain=100, brightness=150
 
-    string video_str = "/dev/video1";
-    video_str[10] = '0' + m_deviceId;
-    int device = v4l2_open(video_str.c_str(), O_RDWR | O_NONBLOCK);
+  // string video_str = "/home/tejaswikasarla/Desktop/20150907102311.avi";
+   // video_str[10] = '0' + m_deviceId;
+   // int device = v4l2_open(video_str.c_str(), O_RDWR | O_NONBLOCK);
 
-    if (m_exposure >= 0) {
+   // if (m_exposure >= 0) {
       // not sure why, but v4l2_set_control() does not work for
       // V4L2_CID_EXPOSURE_AUTO...
-      struct v4l2_control c;
-      c.id = V4L2_CID_EXPOSURE_AUTO;
-      c.value = 1; // 1=manual, 3=auto; V4L2_EXPOSURE_AUTO fails...
-      if (v4l2_ioctl(device, VIDIOC_S_CTRL, &c) != 0) {
-        cout << "Failed to set... " << strerror(errno) << endl;
-      }
-      cout << "exposure: " << m_exposure << endl;
-      v4l2_set_control(device, V4L2_CID_EXPOSURE_ABSOLUTE, m_exposure*6);
-    }
-    if (m_gain >= 0) {
-      cout << "gain: " << m_gain << endl;
-      v4l2_set_control(device, V4L2_CID_GAIN, m_gain*256);
-    }
-    if (m_brightness >= 0) {
-      cout << "brightness: " << m_brightness << endl;
-      v4l2_set_control(device, V4L2_CID_BRIGHTNESS, m_brightness*256);
-    }
-    v4l2_close(device);
-#endif 
+     // struct v4l2_control c;
+     // c.id = V4L2_CID_EXPOSURE_AUTO;
+     // c.value = 1; // 1=manual, 3=auto; V4L2_EXPOSURE_AUTO fails...
+      //if (v4l2_ioctl(device, VIDIOC_S_CTRL, &c) != 0) {
+      //  cout << "Failed to set... " << strerror(errno) << endl;
+     // }
+      //cout << "exposure: " << m_exposure << endl;
+      //v4l2_set_control(device, V4L2_CID_EXPOSURE_ABSOLUTE, m_exposure*6);
+    //}
+    //if (m_gain >= 0) {
+      //cout << "gain: " << m_gain << endl;
+      //v4l2_set_control(device, V4L2_CID_GAIN, m_gain*256);
+    //}
+   // if (m_brightness >= 0) {
+    //  cout << "brightness: " << m_brightness << endl;
+      //v4l2_set_control(device, V4L2_CID_BRIGHTNESS, m_brightness*256);
+    //}
+    //v4l2_close(device);
+//#endif 
 
     // find and open a USB camera (built in laptop camera, web cam etc)
-    m_cap = cv::VideoCapture(m_deviceId);
+    m_cap = cv::VideoCapture("/home/tejaswikasarla/Desktop/apriltags.avi");
         if(!m_cap.isOpened()) {
-      cerr << "ERROR: Can't find video device " << m_deviceId << "\n";
+      cerr << "ERROR: Can't open the video file \n";
       exit(1);
     }
     m_cap.set(CV_CAP_PROP_FRAME_WIDTH, m_width);
     m_cap.set(CV_CAP_PROP_FRAME_HEIGHT, m_height);
-    cout << "Camera successfully opened (ignore error messages above...)" << endl;
+    cout << "Video successfully found (ignore error messages above...)" << endl;
     cout << "Actual resolution: "
          << m_cap.get(CV_CAP_PROP_FRAME_WIDTH) << "x"
          << m_cap.get(CV_CAP_PROP_FRAME_HEIGHT) << endl;
