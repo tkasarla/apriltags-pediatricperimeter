@@ -168,8 +168,8 @@ public:
     m_width(640),
     m_height(480),
     m_tagSize(0.0205),
-    m_fx(3.6104924005028636e+02),		// camera focal length see http://ksimek.github.io/2013/08/13/intrinsic/
-    m_fy(3.6104924005028636e+02),
+    m_fx(3.5394697767331030e+02),		// camera focal length see http://ksimek.github.io/2013/08/13/intrinsic/
+    m_fy(3.5394697767331030e+02),
     m_px(m_width/2),	// camera principal point
     m_py(m_height/2),
 
@@ -329,11 +329,11 @@ public:
 //#endif 
 
     // find and open a USB camera (built in laptop camera, web cam etc)
-    m_cap = cv::VideoCapture("/home/tejaswikasarla/Desktop/apriltags.avi");
-        if(!m_cap.isOpened()) {
+    m_cap = cv::VideoCapture(1);
+       /* if(!m_cap.isOpened()) {
       cerr << "ERROR: Can't open the video file \n";
       exit(1);
-    }
+    }*/
     m_cap.set(CV_CAP_PROP_FRAME_WIDTH, m_width);
     m_cap.set(CV_CAP_PROP_FRAME_HEIGHT, m_height);
     cout << "Video successfully found (ignore error messages above...)" << endl;
@@ -390,7 +390,13 @@ public:
     //      m_cap.retrieve(image);
 
     // detect April tags (requires a gray scale image)
+    
     cv::cvtColor(image, image_gray, CV_BGR2GRAY);
+    
+    image_gray = image_gray*4;
+    cv::threshold(image_gray,image_gray,127, 255,CV_THRESH_TOZERO);
+    cv::imshow("processedImage",image_gray);
+    
     double t0;
     if (m_timing) {
       t0 = tic();
