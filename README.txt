@@ -6,6 +6,30 @@ Authors - Tejaswi Kasarla, Dhruv Joshi
 Srujana - Center for Innovation, LV Prasad Eye Institute, Hyderabad
 
 We are making use of april tags for the purposes of detecting head movement and position relative to a single camera observational unit for our pediatric perimetry device. All due credits to the original authors. We are using this code as-is for the most part. Any significant changes shall be mentioned in commits and in this README.
+------------------------------------------------------
+Installation Procedure:
+
+install required dependancies in linux(Tested Ubuntu 15.04) by 
+
+sudo apt-get install subversion cmake libopencv-dev libeigen3-dev libv4l-dev
+
+and on Mac by
+
+sudo port install pkgconfig opencv eigen3
+
+The AprilTags library uses the pods build system in connection with cmake. Compile with
+
+cd apriltags
+make
+
+After compiling, run the example program
+
+./build/bin/apriltags_demo
+
+which detects AprilTags visible in laptop or webcam images and marks any tags in the live image. See examples/apriltags_demo.cpp for the source code.
+
+
+
 
 ------------------------------------------------------
 AprilTags library
