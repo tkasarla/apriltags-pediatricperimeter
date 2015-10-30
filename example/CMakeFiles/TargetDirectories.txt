@@ -1,4 +1,0 @@
-/home/tejaswikasarla/apriltags/example/CMakeFiles/apriltags.dir
-/home/tejaswikasarla/apriltags/example/example/CMakeFiles/apriltags_demo.dir
-/home/tejaswikasarla/apriltags/example/example/CMakeFiles/imu.dir
-/home/tejaswikasarla/apriltags/example/CMakeFiles/tmp.dir
