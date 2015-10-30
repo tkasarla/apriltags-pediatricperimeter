@@ -329,7 +329,8 @@ public:
 //#endif 
 
     // find and open a USB camera (built in laptop camera, web cam etc)
-    m_cap = cv::VideoCapture(1);
+    // m_cap = cv::VideoCapture(1);
+    m_cap = cv::VideoCapture("home/tejaswikasarla/capture.avi");
        /* if(!m_cap.isOpened()) {
       cerr << "ERROR: Can't open the video file \n";
       exit(1);
