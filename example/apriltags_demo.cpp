@@ -146,6 +146,8 @@ class Demo {
   list<string> m_imgNames;
 
   cv::VideoCapture m_cap;
+  cv::VideoWriter video1;
+  cv::VideoWriter video2;
 
   int m_exposure;
   int m_gain;
@@ -168,14 +170,16 @@ public:
     m_width(640),
     m_height(480),
     m_tagSize(0.0205),
-    m_fx(3.5394697767331030e+02),		// camera focal length see http://ksimek.github.io/2013/08/13/intrinsic/
-    m_fy(3.5394697767331030e+02),
+    m_fx(1.7900616374814836e+003),		// camera focal length see http://ksimek.github.io/2013/08/13/intrinsic/
+    m_fy(1.7900616374814836e+003),
     m_px(m_width/2),	// camera principal point
     m_py(m_height/2),
 
     m_exposure(-1),
     m_gain(-1),
     m_brightness(-1),
+
+
 
     m_deviceId(1)
   {}
@@ -331,6 +335,8 @@ public:
     // find and open a USB camera (built in laptop camera, web cam etc)
     // m_cap = cv::VideoCapture(1);
     m_cap = cv::VideoCapture("/home/tejaswikasarla/capture.avi");
+    video1 = cv::VideoWriter("capture_test_1.avi",CV_FOURCC('D','I','V','X'),120,cv::Size(640,480));
+    video2 = cv::VideoWriter("processed_test_1.avi",CV_FOURCC('D','I','V','X'),120,cv::Size(640,480));
        /* if(!m_cap.isOpened()) {
       cerr << "ERROR: Can't open the video file \n";
       exit(1);
@@ -395,7 +401,7 @@ public:
     cv::cvtColor(image, image_gray, CV_BGR2GRAY);
     
     image_gray = image_gray*4;
-    cv::threshold(image_gray,image_gray, 120, 255,CV_THRESH_TOZERO);
+    cv::threshold(image_gray,image_gray, 98,255,CV_THRESH_TOZERO);
     cv::imshow("processedImage",image_gray);
     
     double t0;
@@ -419,8 +425,11 @@ public:
       for (int i=0; i<detections.size(); i++) {
         // also highlight in the image
         detections[i].draw(image);
+
       }
-      imshow(windowName, image); // OpenCV call
+            
+            
+            imshow(windowName, image); // OpenCV call
     }
 
     // optionally send tag information to serial port (e.g. to Arduino)
@@ -478,7 +487,13 @@ public:
       m_cap >> image;
 
       processImage(image, image_gray);
+      
+      
+      video2<<image_gray;
+      video1<<image;
+      
 
+      
       // print out the frame rate at which image frames are being processed
       frame++;
       if (frame % 10 == 0) {
