@@ -343,16 +343,16 @@ public:
     }*/
     m_cap.set(CV_CAP_PROP_FRAME_WIDTH, m_width);
     m_cap.set(CV_CAP_PROP_FRAME_HEIGHT, m_height);
-    cout << "Video successfully found (ignore error messages above...)" << endl;
-    cout << "Actual resolution: "
+    cout << "#Video successfully found (ignore error messages above...)" << endl;
+    cout << "#Actual resolution: "
          << m_cap.get(CV_CAP_PROP_FRAME_WIDTH) << "x"
          << m_cap.get(CV_CAP_PROP_FRAME_HEIGHT) << endl;
 
   }
 
   void print_detection(AprilTags::TagDetection& detection) const {
-    cout << "  Id: " << detection.id
-         << " (Hamming: " << detection.hammingDistance << ")";
+    //cout << "  Id: " << detection.id
+        // << " (Hamming: " << detection.hammingDistance << ")";
 
     // recovering the relative pose of a tag:
 
@@ -374,13 +374,13 @@ public:
     double yaw, pitch, roll;
     wRo_to_euler(fixed_rot, yaw, pitch, roll);
 
-    cout << "  distance=" << translation.norm()
-         << "m, x=" << translation(0)
-         << ", y=" << translation(1)
-         << ", z=" << translation(2)
-         << ", yaw=" << yaw
-         << ", pitch=" << pitch
-         << ", roll=" << roll
+    cout <<translation.norm()
+         << "," << translation(0)
+         << "," << translation(1)
+         << "," << translation(2)
+         << "," << yaw
+         << "," << pitch
+         << "," << roll
          << endl;
 
     // Also note that for SLAM/multi-view application it is better to
@@ -411,11 +411,22 @@ public:
     vector<AprilTags::TagDetection> detections = m_tagDetector->extractTags(image_gray);
     if (m_timing) {
       double dt = tic()-t0;
-      cout << "Extracting tags took " << dt << " seconds." << endl;
+      //cout << "Extracting tags took " << dt << " seconds." << endl;
     }
 
     // print out each detection
-    cout << detections.size() << " tags detected:" << endl;
+    cout <<"#" << detections.size() << " tags detected:" << endl;
+    if(detections.size() == 0)
+    {
+      cout << detections.size()
+           << "," <<detections.size()
+           << "," <<detections.size()
+           << "," <<detections.size()
+           << "," <<detections.size()
+           << "," <<detections.size()
+           << "," <<detections.size()
+           <<endl;
+    }
     for (int i=0; i<detections.size(); i++) {
       print_detection(detections[i]);
     }
@@ -498,7 +509,7 @@ public:
       frame++;
       if (frame % 10 == 0) {
         double t = tic();
-        cout << "  " << 10./(t-last_t) << " fps" << endl;
+        //cout << "  " << 10./(t-last_t) << " fps" << endl;
         last_t = t;
       }
 
@@ -520,7 +531,7 @@ int main(int argc, char* argv[]) {
   demo.setup();
 
   if (demo.isVideo()) {
-    cout << "Processing video" << endl;
+    //cout << "Processing video" << endl;
 
     // setup image source, window for drawing, serial port...
     demo.setupVideo();
@@ -529,7 +540,7 @@ int main(int argc, char* argv[]) {
     demo.loop();
 
   } else {
-    cout << "Processing image" << endl;
+    //cout << "Processing image" << endl;
 
     // process single image
     demo.loadImages();
