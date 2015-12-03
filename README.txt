@@ -11,16 +11,16 @@ Installation Procedure:
 
 install required dependancies in linux(Tested Ubuntu 15.04) by 
 
-sudo apt-get install subversion cmake libopencv-dev libeigen3-dev libv4l-dev
+```sudo apt-get install subversion cmake libopencv-dev libeigen3-dev libv4l-dev```
 
 and on Mac by
 
-sudo port install pkgconfig opencv eigen3
+```sudo port install pkgconfig opencv eigen3```
 
 The AprilTags library uses the pods build system in connection with cmake. Compile with
 
-cd apriltags
-make
+```cd apriltags```
+`make`
 
 After compiling, run the example program
 
